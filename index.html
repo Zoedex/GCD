@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCD calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ysabeau+SC:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <center class="tittle">
+        <h2>GCD CAlculator</h2>
+        <p>Please input A and B to calculate GCD.</p>
+    </center>
+    <div class="container">
+        <div class="box">
+            <br>
+            <div class="entrysection">
+                <input type="number" id="firstNumber" required>
+                <div class="label">Input A</div>
+            </div>
+            <div class="entrysection">
+                <input type="number" id="secondNumber" required>
+                <div class="label">Input B</div>
+            </div>
+            <div class="button-section">
+                <button id="calculate" >Calculate</button>
+                <button id="reset">Reset</button>
+            </div>
+            <div class="entrysection">
+                <center><p class="p" id="result"></p></center>
+            </div>
+            
+        </div>
+    </div>
+    
+</body>
+</html>
+<script>
+    function gcd(a, b) {
+        // Check if either input field is empty.
+        if (!Number.isInteger(a) || !Number.isInteger(b)) {
+        return "please input the number";
+        }
+        // either a and b is 0 ,return 0
+        if (a === 0 || b === 0) {
+        return 0;
+        }
+        // represent both numbers as absolute number
+        a = Math.abs(a);
+        b = Math.abs(b);
+        // find devidend and devisor
+        let dividend = Math.max(a, b);
+        let divisor = Math.min(a, b);
+        
+        // start calculation
+        while (dividend % divisor !== 0) {
+        const remainder = dividend % divisor;
+        // swap if remainder is not 0
+        dividend = divisor;
+        divisor = remainder;
+        }
+
+    return divisor;
+  }
+    // decleare variables
+    const firstNumberInput = document.getElementById("firstNumber");
+    const secondNumberInput = document.getElementById("secondNumber");
+    const button1 = document.getElementById("calculate");
+    const button2 = document.getElementById("reset");
+    const result = document.getElementById("result");
+    const box = document.querySelector(".box");
+    // button definition
+    button1.addEventListener("click", () => {
+    box.style.boxShadow = "0 0 10px 5px #e90080";
+    const firstNumber = parseInt(firstNumberInput.value);
+    const secondNumber = parseInt(secondNumberInput.value);
+    const gcdr = gcd(firstNumber, secondNumber);
+    if (firstNumber === "" || secondNumber === "" || !Number.isInteger(firstNumber) || !Number.isInteger(secondNumber)) {
+        result.innerHTML = "Please input the numbers.";
+        } else {
+        result.innerHTML = `The GCD of ${firstNumber} and ${secondNumber} is ${gcdr}.`;
+        }    
+    });
+    button2.addEventListener("click", () => {
+        firstNumberInput.value = "";
+        secondNumberInput.value = "";
+        result.innerHTML = "";
+        box.style.boxShadow = "0px 0px 10px 5px greenyellow";
+    });
+</script>
